@@ -51,4 +51,15 @@ router.beforeEach((to, _from, next) => {
   }
 });
 
+router.beforeEach((to, _from, next) => {
+  const userToken = localStorage.getItem("token");
+  const needAuth = to.meta.requireAuth;
+
+  if (!needAuth && userToken) {
+    next({ name: "Home" });
+  } else {
+    next();
+  }
+});
+
 export default router;

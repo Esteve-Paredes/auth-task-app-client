@@ -25,6 +25,9 @@ onMounted(async () => {
 </script>
 <template>
   <div class="relative p-8">tasks</div>
+  <h2>
+    {{ projectId }}
+  </h2>
 </template>
 
 <style></style>
