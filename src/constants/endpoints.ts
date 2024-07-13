@@ -6,5 +6,6 @@ export const LOGIN_USER = API_URL + "/login";
 export const GET_PROJECTS = API_URL + "/projects";
 export const CREATE_PROJECTS = API_URL + "/projects";
 export const UPDATE_PROJECTS = API_URL + "/projects";
+export const DELETE_PROJECTS = API_URL + "/projects";
 
 export const GET_TASKS = API_URL + "/projects";

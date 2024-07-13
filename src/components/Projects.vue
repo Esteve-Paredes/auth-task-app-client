@@ -2,15 +2,36 @@
 import { ProjectsEntity } from "../types/projectsEntity";
 import EditSVG from "./EditSVG.vue";
 import DeleteSvg from "./DeleteSVG.vue";
+import { ref } from "vue";
+import { deleteProject } from "../api/deleteProject";
 
 const props = defineProps<{
   project: ProjectsEntity;
 }>();
 
-const emit = defineEmits(["openModal", "deleteProduct"]);
+const emit = defineEmits(["openModal", "deleteProject"]);
 
 const handlerEdit = () => {
   emit("openModal", props.project);
+};
+
+const loanding = ref(true);
+
+//eliminar un producto
+const handlerDelete = async () => {
+  try {
+    loanding.value = false;
+    const response = await deleteProject(props.project.id);
+
+    if (!response) {
+      throw new Error("Error al eliminar un producto");
+    }
+
+    emit("deleteProject", props.project);
+    loanding.value = true;
+  } catch (error) {
+    console.error("Error: ", error);
+  }
 };
 </script>
 <template>
@@ -35,7 +56,7 @@ const handlerEdit = () => {
       <button class="border p-2 rounded-lg" @click="handlerEdit">
         <EditSVG class="fill-black stroke-black w-5"></EditSVG>
       </button>
-      <button class="border p-2 rounded-lg">
+      <button class="border p-2 rounded-lg" @click="handlerDelete">
         <DeleteSvg class="fill-black stroke-black w-5"></DeleteSvg>
       </button>
     </div>

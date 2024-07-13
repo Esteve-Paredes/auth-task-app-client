@@ -46,13 +46,15 @@ const updateProject = (data: ProjectsEntity) => {
   }
 };
 
+const deleteProje = (data: ProjectsEntity) => {
+  projects.value = projects.value.filter((prod) => prod.id !== data.id);
+};
+
 onMounted(async () => {
   try {
     const response = await getProjects();
 
     projects.value = response.projects;
-
-    console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -85,6 +87,7 @@ onMounted(async () => {
           :key="project.id"
           :project="project"
           @openModal="viewModalAndGetData"
+          @deleteProject="deleteProje"
         ></Projects>
       </div>
     </div>
