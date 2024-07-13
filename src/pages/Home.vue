@@ -4,15 +4,21 @@ import { getProjects } from "../api/getProjects";
 import { ProjectsEntity } from "../types/projectsEntity";
 import Projects from "../components/Projects.vue";
 import CreateModalProject from "../components/CreateModalProject.vue";
+import EditModalProject from "../components/EditModalProject.vue";
 
 const projects = ref<ProjectsEntity[]>([]);
 
+//data para actualizar el proyecto
+const dataProject = ref<ProjectsEntity | null>(null);
+
 const viewModals = reactive({
+  editModal: false,
   createModal: false,
 });
 
 //cerrar modales
 const closeModal = () => {
+  viewModals.editModal = false;
   viewModals.createModal = false;
 };
 
@@ -24,6 +30,20 @@ const viewModalCreate = () => {
 //se obtiene el proyecto y se agrega a projects para su renderizado en ui
 const getProject = (data: ProjectsEntity) => {
   projects.value.push(data);
+};
+
+//mostrar el UpdateModal y enviar datos del producto al Modal
+const viewModalAndGetData = (data: ProjectsEntity) => {
+  viewModals.editModal = true;
+  dataProject.value = data;
+};
+
+//actualizar el producto con la respuesta del fetch para que se muesre en la UI
+const updateProject = (data: ProjectsEntity) => {
+  const indexProduct = projects.value.findIndex((pro) => pro.id === data.id);
+  if (indexProduct !== -1) {
+    projects.value[indexProduct] = data;
+  }
 };
 
 onMounted(async () => {
@@ -64,6 +84,7 @@ onMounted(async () => {
           v-for="project in projects"
           :key="project.id"
           :project="project"
+          @openModal="viewModalAndGetData"
         ></Projects>
       </div>
     </div>
@@ -73,6 +94,12 @@ onMounted(async () => {
     @clickOutSideAndClose="closeModal"
     @newProject="getProject"
   ></CreateModalProject>
+  <EditModalProject
+    v-if="viewModals.editModal && dataProject"
+    :project="dataProject"
+    @clickOutSideAndClose="closeModal"
+    @dataProjectUpdate="updateProject"
+  ></EditModalProject>
 </template>
 
 <style></style>

@@ -6,6 +6,12 @@ import DeleteSvg from "./DeleteSVG.vue";
 const props = defineProps<{
   project: ProjectsEntity;
 }>();
+
+const emit = defineEmits(["openModal", "deleteProduct"]);
+
+const handlerEdit = () => {
+  emit("openModal", props.project);
+};
 </script>
 <template>
   <div class="flex flex-col gap-2">
@@ -26,11 +32,11 @@ const props = defineProps<{
       </div>
     </RouterLink>
     <div class="flex gap-1 px-3">
-      <button class="border p-2 rounded-lg">
-        <EditSVG></EditSVG>
+      <button class="border p-2 rounded-lg" @click="handlerEdit">
+        <EditSVG class="fill-black stroke-black w-5"></EditSVG>
       </button>
       <button class="border p-2 rounded-lg">
-        <DeleteSvg></DeleteSvg>
+        <DeleteSvg class="fill-black stroke-black w-5"></DeleteSvg>
       </button>
     </div>
   </div>
