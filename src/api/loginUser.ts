@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { UserLogin } from "../types/User";
 import { LOGIN_USER } from "../constants/endpoints";
 

@@ -1,5 +1,15 @@
-<script>
-import { onMounted } from "vue";
+<script setup lang="ts">
+import { computed, onMounted, reactive } from "vue";
+import { getProjectsById } from "../api/getProjectById";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const projectId = computed(() => route.params.projectId);
+
+const projectInitial = reactive({
+  title: "",
+  description: "",
+});
 
 onMounted(async () => {
   try {

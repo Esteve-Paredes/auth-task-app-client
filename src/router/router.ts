@@ -36,7 +36,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const userToken = localStorage.getItem("token");
   const needAuth = to.meta.requireAuth;
 
