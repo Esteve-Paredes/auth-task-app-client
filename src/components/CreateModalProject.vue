@@ -78,7 +78,7 @@ const clickOutSideModal = () => {
         class="w-28"
         :isDisabled="isDisable"
         :isLoading="loading"
-        text="Crear"
+        text="Create"
       ></Button>
     </form>
   </div>

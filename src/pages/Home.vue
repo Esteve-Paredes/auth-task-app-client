@@ -81,11 +81,11 @@ onMounted(async () => {
         </div>
         <div class="text-white flex gap-2">
           <Button
-            class="w-auto"
+            class="w-32"
             text="Add Project"
             @click="viewModalCreate"
           ></Button>
-          <Button class="w-auto" text="Log Out" @click="logOut"></Button>
+          <Button class="w-32" text="Logout" @click="logOut"></Button>
         </div>
       </div>
       <div

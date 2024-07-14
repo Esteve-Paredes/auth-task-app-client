@@ -94,7 +94,11 @@ const submitForm = async () => {
             />
           </div>
         </div>
-        <Button class="h-12" text="Registrar" :isLoading="loading"></Button>
+        <Button
+          class="w-full h-12"
+          text="Register"
+          :isLoading="loading"
+        ></Button>
 
         <span v-if="showError" class="text-red-600 text-sm text-center"
           >*Credenciales Invalidas</span

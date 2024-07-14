@@ -18,7 +18,7 @@ const clickLoader = () => {
 <template>
   <button
     :type="type"
-    class="text-white bg-black px-4 w-full h-9 rounded-md hover:opacity-80 disabled:pointer-events-none disabled:opacity-50"
+    class="text-white shrink-0 bg-black px-4 h-9 rounded-md hover:opacity-80 disabled:pointer-events-none disabled:opacity-50"
     :disabled="props.isDisabled"
     @click="clickLoader"
   >
