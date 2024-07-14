@@ -21,13 +21,13 @@ const submitEditProject = async () => {
   try {
     loading.value = true;
     const project = dataProject.value;
-    const { data } = await editProject(project);
+    const request = await editProject(project);
 
-    if (!data) {
+    if (!request?.data) {
       throw new Error("Error al actualizar un projecto");
     }
 
-    emit("dataProjectUpdate", data.project);
+    emit("dataProjectUpdate", request.data.project);
     emit("clickOutSideAndClose");
   } catch (error) {
     console.error("Error: ", error);

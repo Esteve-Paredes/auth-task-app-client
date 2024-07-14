@@ -21,13 +21,13 @@ const isDisable = computed(() => {
 const submitCreateProject = async () => {
   try {
     loading.value = true;
-    const { data } = await createProject(dataProject);
+    const request = await createProject(dataProject);
 
-    if (!data) {
+    if (!request?.data) {
       throw new Error("Error al crear un projecto");
     }
-    console.log(data.project);
-    emit("newProject", data.project);
+
+    emit("newProject", request.data.project);
     emit("clickOutSideAndClose");
   } catch (error) {
     console.error("Error: ", error);
