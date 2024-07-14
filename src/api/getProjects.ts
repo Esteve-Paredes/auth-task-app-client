@@ -3,12 +3,7 @@ import { GET_PROJECTS } from "../constants/endpoints";
 
 export const getProjects = async () => {
   try {
-    const token = localStorage.getItem("token");
-    const { data } = await axios.get(GET_PROJECTS, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axios.get(GET_PROJECTS);
     return data;
   } catch (error) {
     //validando si es una instancia de AxiosError

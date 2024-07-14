@@ -5,6 +5,7 @@ import { ProjectsEntity } from "../types/projectsEntity";
 import Projects from "../components/Projects.vue";
 import CreateModalProject from "../components/CreateModalProject.vue";
 import EditModalProject from "../components/EditModalProject.vue";
+import { useRouter } from "vue-router";
 
 const projects = ref<ProjectsEntity[]>([]);
 
@@ -50,6 +51,13 @@ const deleteProje = (data: ProjectsEntity) => {
   projects.value = projects.value.filter((prod) => prod.id !== data.id);
 };
 
+const router = useRouter();
+
+const logOut = () => {
+  localStorage.removeItem("token");
+  router.push({ name: "SignIn" });
+};
+
 onMounted(async () => {
   try {
     const response = await getProjects();
@@ -76,6 +84,12 @@ onMounted(async () => {
             class="bg-black rounded-lg px-4 py-2 hover:opacity-80"
           >
             Add Project
+          </button>
+          <button
+            @click="logOut"
+            class="bg-black rounded-lg px-4 py-2 hover:opacity-80 ml-3"
+          >
+            Log Out
           </button>
         </div>
       </div>

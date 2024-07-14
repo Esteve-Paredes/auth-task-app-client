@@ -9,13 +9,7 @@ export const editProject = async (dataProject: ProjectsEntity) => {
   };
 
   try {
-    const token = localStorage.getItem("token");
-
-    return await axios.put(UPDATE_PROJECTS + `/${dataProject.id}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return await axios.put(UPDATE_PROJECTS + `/${dataProject.id}`, formData);
   } catch (error) {
     //validando si es una instancia de AxiosError
     if (axios.isAxiosError(error)) {

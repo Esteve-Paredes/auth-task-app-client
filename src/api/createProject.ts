@@ -8,13 +8,7 @@ export const createProject = async (dataProject: ProjectDTO) => {
   formData.append("description", dataProject.description);
 
   try {
-    const token = localStorage.getItem("token");
-
-    return await axios.post(CREATE_PROJECTS, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return await axios.post(CREATE_PROJECTS, formData);
   } catch (error) {
     //validando si es una instancia de AxiosError
     if (axios.isAxiosError(error)) {
