@@ -6,6 +6,7 @@ import Projects from "../components/Projects.vue";
 import CreateModalProject from "../components/CreateModalProject.vue";
 import EditModalProject from "../components/EditModalProject.vue";
 import { useRouter } from "vue-router";
+import Button from "../components/Button.vue";
 
 const projects = ref<ProjectsEntity[]>([]);
 
@@ -78,19 +79,13 @@ onMounted(async () => {
             Projects
           </h2>
         </div>
-        <div class="text-white">
-          <button
+        <div class="text-white flex gap-2">
+          <Button
+            class="w-auto"
+            text="Add Project"
             @click="viewModalCreate"
-            class="bg-black rounded-lg px-4 py-2 hover:opacity-80"
-          >
-            Add Project
-          </button>
-          <button
-            @click="logOut"
-            class="bg-black rounded-lg px-4 py-2 hover:opacity-80 ml-3"
-          >
-            Log Out
-          </button>
+          ></Button>
+          <Button class="w-auto" text="Log Out" @click="logOut"></Button>
         </div>
       </div>
       <div

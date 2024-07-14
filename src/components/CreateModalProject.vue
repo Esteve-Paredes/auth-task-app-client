@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
-import SmallSpiner from "../components/SmallSpiner.vue";
 import { createProject } from "../api/createProject";
+import Button from "../components/Button.vue";
 
 const dataProject = reactive({
   title: "",
   description: "",
 });
 
-const loanding = ref(true);
+const loading = ref(false);
 
 const emit = defineEmits(["clickOutSideAndClose", "newProject"]);
 
@@ -17,13 +17,10 @@ const isDisable = computed(() => {
   return !dataProject.title || !dataProject.description;
 });
 
-const clickLoader = () => {
-  loanding.value = false;
-};
-
 //crear projecto y emite señales
 const submitCreateProject = async () => {
   try {
+    loading.value = true;
     const { data } = await createProject(dataProject);
 
     if (!data) {
@@ -32,9 +29,10 @@ const submitCreateProject = async () => {
     console.log(data.project);
     emit("newProject", data.project);
     emit("clickOutSideAndClose");
-    loanding.value = true;
   } catch (error) {
     console.error("Error: ", error);
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -72,20 +70,16 @@ const clickOutSideModal = () => {
         >
         <textarea
           v-model="dataProject.description"
-          class="rounded-md py-1 px-3 border mb-5 mt-2 text-gray-600 w-full h-16 flex items-center pl-3 text-sm border-gray-300 resize-none"
+          class="rounded-sm py-1 px-3 border mb-5 mt-2 text-gray-600 w-full h-16 flex items-center pl-3 text-sm border-gray-300 resize-none"
           placeholder="Description Project"
         ></textarea>
       </div>
-      <button
-        class="text-white bg-black w-24 h-9 rounded-xl hover:opacicty-80 disabled:pointer-events-none disabled:opacity-50"
-        :disabled="isDisable"
-        @click="clickLoader"
-      >
-        <span v-if="loanding">Crear</span>
-        <div v-else class="w-24 h-9 flex justify-center items-center">
-          <SmallSpiner></SmallSpiner>
-        </div>
-      </button>
+      <Button
+        class="w-28"
+        :isDisabled="isDisable"
+        :isLoading="loading"
+        text="Crear"
+      ></Button>
     </form>
   </div>
 </template>

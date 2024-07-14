@@ -1,18 +1,14 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import SmallSpiner from "../components/SmallSpiner.vue";
 import { ProjectsEntity } from "../types/projectsEntity";
 import { editProject } from "../api/editProject";
+import Button from "./Button.vue";
 
 const props = defineProps<{
   project: ProjectsEntity;
 }>();
 
-const loanding = ref(true);
-
-const clickLoader = () => {
-  loanding.value = false;
-};
+const loading = ref(false);
 
 const emit = defineEmits(["clickOutSideAndClose", "dataProjectUpdate"]);
 
@@ -23,6 +19,7 @@ const dataProject = ref({
 //crear projecto y emite señales
 const submitEditProject = async () => {
   try {
+    loading.value = true;
     const project = dataProject.value;
     const { data } = await editProject(project);
 
@@ -32,9 +29,10 @@ const submitEditProject = async () => {
 
     emit("dataProjectUpdate", data.project);
     emit("clickOutSideAndClose");
-    loanding.value = true;
   } catch (error) {
     console.error("Error: ", error);
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -76,15 +74,7 @@ const clickOutSideModal = () => {
           placeholder="Description Project"
         ></textarea>
       </div>
-      <button
-        class="text-white bg-black w-24 h-9 rounded-xl hover:opacicty-80 disabled:pointer-events-none disabled:opacity-50"
-        @click="clickLoader"
-      >
-        <span v-if="loanding">Edit</span>
-        <div v-else class="w-24 h-9 flex justify-center items-center">
-          <SmallSpiner></SmallSpiner>
-        </div>
-      </button>
+      <Button class="w-28" :isLoading="loading" text="Edit"></Button>
     </form>
   </div>
 </template>

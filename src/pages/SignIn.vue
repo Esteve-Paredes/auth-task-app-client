@@ -2,6 +2,7 @@
 import { reactive, ref } from "vue";
 import { loginUser } from "../api/loginUser";
 import router from "../router/router";
+import Button from "../components/Button.vue";
 
 const dataUser = reactive({
   email: "",
@@ -9,9 +10,11 @@ const dataUser = reactive({
 });
 
 const showError = ref(false);
+const loading = ref(false);
 
 const submitForm = async () => {
   try {
+    loading.value = true;
     const data = await loginUser(dataUser);
 
     if (!data) {
@@ -29,6 +32,8 @@ const submitForm = async () => {
 
     showError.value = true;
     console.error("Error: ", error);
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -75,13 +80,7 @@ const submitForm = async () => {
             />
           </div>
         </div>
-        <button
-          class="w-full select-none rounded-lg bg-sky-700 py-3 px-6 text-center font-sans text-xs font-bold text-white shadow-md hover:shadow-lg disabled:pointer-events-none disabled:opacity-50"
-          type="submit"
-          data-ripple-light="true"
-        >
-          ENVIAR
-        </button>
+        <Button class="h-12" text="Ingresar" :isLoading="loading"></Button>
         <span v-if="showError" class="text-red-600 text-sm text-center"
           >*Credenciales Invalidas</span
         >
